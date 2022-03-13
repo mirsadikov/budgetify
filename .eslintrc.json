@@ -5,7 +5,8 @@
         "node": true
     },
     "extends": [
-        "airbnb-base"
+        "airbnb-base",
+        "prettier"
     ],
     "plugins": [
         "prettier"
@@ -31,7 +32,7 @@
             {
                 "js": "always"
             }
-        ],
-        "no-unused-vars": "off"
+        ]
+        // "no-unused-vars": "off"
     }
 }

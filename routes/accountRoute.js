@@ -6,16 +6,16 @@ import {
   getAllAccounts,
   updateAccount,
 } from '../controller/accountController.js';
-import { protect } from '../middlewares/authMiddleware.js';
+import { auth } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/create', protect, createAccount);
-router.get('/', protect, getAllAccounts);
+router.post('/create', auth, createAccount);
+router.get('/', auth, getAllAccounts);
 router
   .route('/:id')
-  .post(protect, updateAccount)
-  .get(protect, getAccount)
-  .delete(protect, deleteAccount);
+  .post(auth, updateAccount)
+  .get(auth, getAccount)
+  .delete(auth, deleteAccount);
 
 export default router;
