@@ -2,7 +2,6 @@ import { incomes } from '../data/db.js';
 
 export function createIncome(req, res) {
   // get info from req.body
-  // eslint-disable-next-line
   const { amount, comment, date, accountId } = req.body;
   // get info from req.user
   // create income in database

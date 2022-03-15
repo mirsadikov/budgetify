@@ -6,16 +6,16 @@ import {
   getFaq,
   updateFaq,
 } from '../controller/faqController.js';
-import { admin, protect } from '../middlewares/authMiddleware.js';
+import { admin, auth } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/create', protect, admin, createFaq);
-router.get('/', protect, getAllFaqs);
+router.post('/create', auth, admin, createFaq);
+router.get('/', auth, getAllFaqs);
 router
   .route('/:id')
-  .post(protect, admin, updateFaq)
-  .get(protect, getFaq)
-  .delete(protect, admin, deleteFaq);
+  .post(auth, admin, updateFaq)
+  .get(auth, getFaq)
+  .delete(auth, admin, deleteFaq);
 
 export default router;

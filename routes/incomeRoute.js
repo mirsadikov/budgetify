@@ -6,16 +6,16 @@ import {
   getIncome,
   updateIncome,
 } from '../controller/incomeController.js';
-import { protect } from '../middlewares/authMiddleware.js';
+import { auth } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/create', protect, createIncome);
-router.get('/', protect, getAllIncomes);
+router.post('/create', auth, createIncome);
+router.get('/', auth, getAllIncomes);
 router
   .route('/:id')
-  .post(protect, updateIncome)
-  .get(protect, getIncome)
-  .delete(protect, deleteIncome);
+  .post(auth, updateIncome)
+  .get(auth, getIncome)
+  .delete(auth, deleteIncome);
 
 export default router;

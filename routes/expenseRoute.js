@@ -6,16 +6,16 @@ import {
   getExpense,
   updateExpense,
 } from '../controller/expenseController.js';
-import { protect } from '../middlewares/authMiddleware.js';
+import { auth } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
 
-router.post('/create', protect, createExpense);
-router.get('/', protect, getAllExpenses);
+router.post('/create', auth, createExpense);
+router.get('/', auth, getAllExpenses);
 router
   .route('/:id')
-  .post(protect, updateExpense)
-  .get(protect, getExpense)
-  .delete(protect, deleteExpense);
+  .post(auth, updateExpense)
+  .get(auth, getExpense)
+  .delete(auth, deleteExpense);
 
 export default router;

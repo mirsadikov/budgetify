@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"password1\"\r\n}",
+							"raw": "{\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"user1_123!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -37,6 +37,56 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"role\": \"user\",\r\n    \"password\": \"user123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{PORT}}/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		},
@@ -46,14 +96,18 @@
 				{
 					"name": "Create",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg3MTk4LCJleHAiOjE2NDcxOTA3OTh9._hHB6_7dFLVyjEgGyx4BzPMbQUCXB4Z26kRLniPF2_c",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "userid",
-								"value": "1",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"name\": \"Gold\",\r\n    \"currency\": \"RUB\"\r\n}",
@@ -82,6 +136,16 @@
 				{
 					"name": "Update",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg3MTk4LCJleHAiOjE2NDcxOTA3OTh9._hHB6_7dFLVyjEgGyx4BzPMbQUCXB4Z26kRLniPF2_c",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -92,7 +156,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Silver\",\r\n    \"currency\": \"EUR\",\r\n    \"balance\": 500\r\n}",
+							"raw": "{\r\n    \"name\": \"Gold+\",\r\n    \"currency\": \"EUR\",\r\n    \"balance\": 500\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -100,7 +164,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/2",
+							"raw": "http://localhost:{{PORT}}/api/account/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -109,7 +173,7 @@
 							"path": [
 								"api",
 								"account",
-								"2"
+								"1"
 							]
 						}
 					},
@@ -118,6 +182,16 @@
 				{
 					"name": "Get All",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -138,10 +212,20 @@
 				{
 					"name": "Get One",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/3",
+							"raw": "http://localhost:{{PORT}}/api/account/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -150,7 +234,7 @@
 							"path": [
 								"api",
 								"account",
-								"3"
+								"1"
 							]
 						}
 					},
@@ -257,6 +341,16 @@
 				{
 					"name": "Get All",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -745,6 +839,16 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
