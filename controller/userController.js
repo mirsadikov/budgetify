@@ -1,63 +1,68 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import * as db from '../data/db.js';
+import User from '../models/User.js';
+import generateToken from '../utils/generateToken.js';
 
-export function registerUser(req, res) {
-  const { email, password, role } = req.body;
-  const userExists = db.getUserByEmail(email);
+export async function registerUser(req, res, next) {
+  try {
+    const { firstName, lastName, email, password } = req.body;
+    const userExists = await User.findOne({ email });
 
-  if (userExists) {
-    // if user exists, send error message
-    res.status(400);
-    throw new Error('User already exists!');
+    if (userExists) {
+      // if user exists, send error message
+      res.status(400);
+      throw new Error('User already exists!');
+    }
+
+    const user = await User.create({
+      firstName,
+      lastName,
+      email,
+      password,
+    });
+
+    const payload = { id: user._id, email: user.email, role: user.role };
+
+    res.status(201).json({
+      id: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      role: user.role,
+      token: `Bearer ${generateToken(payload)}`,
+    });
+  } catch (error) {
+    next(error);
   }
-
-  const id = db.registerUser({ email, role, password });
-  const payload = { id, email, role };
-
-  const token = jwt.sign(payload, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-
-  res.status(200).json({
-    id,
-    email,
-    role,
-    token: `Bearer ${token}`,
-  });
 }
 
-export function loginUser(req, res) {
-  // get info from database
-  const { email, password } = req.body;
-  const user = db.getUserByEmail(email);
+export async function loginUser(req, res, next) {
+  try {
+    // get info from database
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-  if (user) {
-    if (bcrypt.compareSync(password, user.password)) {
-      const payload = {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-      };
+    if (user) {
+      if (user.matchPassword(password, user.password)) {
+        const payload = { id: user.id, email: user.email, role: user.role };
 
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-      });
-
-      res.status(200).json({
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        token: `Bearer ${token}`,
-      });
+        res.status(200).json({
+          id: user._id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          role: user.role,
+          token: `Bearer ${generateToken(payload)}`,
+        });
+      } else {
+        res.status(401);
+        throw new Error('Incorrect email or password!');
+      }
     } else {
-      res.status(401);
-      throw new Error('Incorrect email or password!');
+      // if no user, send error message
+      res.status(404);
+      throw new Error('User not found!');
     }
-  } else {
-    // if no user, send error message
-    res.status(401);
-    throw new Error('User not found!');
+  } catch (error) {
+    next(error);
   }
 }
 

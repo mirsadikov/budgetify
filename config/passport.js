@@ -1,10 +1,15 @@
-import * as db from '../data/db.js';
+import { ExtractJwt } from 'passport-jwt';
+import User from '../models/User.js';
 
-// eslint-disable-next-line
-export const jwtCallback = (jwtPayLoad, done) => {
-  const user = db.getUserByEmail(jwtPayLoad.email);
+export const jwtCallback = async (jwtPayLoad, done) => {
+  const user = await User.findById(jwtPayLoad.id);
   if (user) {
     return done(null, user);
   }
   return done(null, false);
+};
+
+export const jwtOptions = {
+  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET,
 };

@@ -1,90 +1,86 @@
-import { accounts } from '../data/db.js';
+import Account from '../models/Account.js';
 
-export function createAccount(req, res) {
-  // get info from req.body
-  const { name, currency } = req.body;
-  // get info from req.user
-  const { id: userId } = req.user;
-  // create account in database
-  const newAcc = {
-    id: accounts.length + 1,
-    userId,
-    name,
-    currency,
-    balance: 0,
-  };
+export async function createAccount(req, res, next) {
+  try {
+    const { title, description, currency } = req.body;
+    const { id: userId } = req.user;
+    const newAcc = await Account.create({
+      userId,
+      title,
+      description,
+      currency,
+    });
 
-  accounts.push(newAcc);
-
-  res.json(newAcc);
-}
-
-export function updateAccount(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // get info from req.body
-  const { name, currency, balance } = req.body;
-  // get info from req.user
-  const { id: userId } = req.user;
-  // update account in database
-  const accIndex = accounts.findIndex(
-    (acc) => acc.id === +id && acc.userId === userId,
-  );
-
-  if (accIndex === -1) {
-    res.status(404);
-    throw new Error('Account not found');
+    res.status(201).json(newAcc);
+  } catch (error) {
+    next(error);
   }
-  accounts[accIndex].name = name;
-  accounts[accIndex].currency = currency;
-  accounts[accIndex].balance = balance;
-
-  res.json(accounts[accIndex]);
 }
 
-export function getAccount(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // get info from req.user
-  const { id: userId } = req.user;
-  // get account from database
-  const account = accounts.find(
-    (acc) => acc.id === +id && acc.userId === userId,
-  );
+export async function updateAccount(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { title, description, currency, balance } = req.body;
+    const { id: userId } = req.user;
 
-  if (!account) {
-    res.status(404);
-    throw new Error('Account not found');
+    const account = await Account.findOne({ _id: id, userId });
+
+    if (account) {
+      const udtAcc = await Account.findByIdAndUpdate(
+        id,
+        { title, description, currency, balance },
+        { new: true },
+      );
+      res.status(200).json(udtAcc);
+    } else {
+      res.status(404);
+      throw new Error('Account not found!');
+    }
+  } catch (error) {
+    next(error);
   }
-
-  res.json(account);
 }
 
-export function getAllAccounts(req, res) {
+export async function getAccount(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { id: userId } = req.user;
+    const account = await Account.findOne({ _id: id, userId });
+
+    if (account) {
+      res.status(200).json(account);
+    } else {
+      res.status(404);
+      throw new Error('Account not found');
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getAllAccounts(req, res) {
   // get info from req.user
   const { id } = req.user;
   // get all accounts from database
-  const userAccounts = accounts.filter((acc) => acc.userId === id);
+  const userAccounts = await Account.where({ userId: id });
 
   res.json(userAccounts);
 }
 
-export function deleteAccount(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // get info from req.user
-  const { id: userId } = req.user;
-  // delete account from database
-  const accIndex = accounts.findIndex(
-    (acc) => acc.id === +id && acc.userId === userId,
-  );
+export async function deleteAccount(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { id: userId } = req.user;
+    const account = await Account.findOne({ _id: id, userId });
 
-  if (accIndex === -1) {
-    res.status(404);
-    throw new Error('Account not found');
+    if (account) {
+      await account.remove();
+      res.status(200).json({ success: true });
+    } else {
+      res.status(404);
+      throw new Error('Account not found');
+    }
+  } catch (error) {
+    next(error);
   }
-  accounts.splice(accIndex, 1);
-  // delete all incomes and expenses from database
-
-  res.json({ message: 'Account deleted' });
 }

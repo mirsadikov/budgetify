@@ -1,5 +1,5 @@
 import passport from 'passport';
-import * as db from '../data/db.js';
+import User from '../models/User.js';
 
 const auth = (req, res, next) =>
   passport.authenticate('jwt', { session: false }, (err, user) => {
@@ -15,8 +15,8 @@ const auth = (req, res, next) =>
     return next();
   })(req, res, next);
 
-const admin = (req, res, next) => {
-  const user = db.getUserByEmail(req.user.email);
+const admin = async (req, res, next) => {
+  const user = await User.findById(req.user._id);
 
   if (user && user.role.toLowerCase() === 'admin') {
     next();

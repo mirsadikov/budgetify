@@ -14,7 +14,7 @@ router.post('/create', auth, createAccount);
 router.get('/', auth, getAllAccounts);
 router
   .route('/:id')
-  .post(auth, updateAccount)
+  .put(auth, updateAccount)
   .get(auth, getAccount)
   .delete(auth, deleteAccount);
 

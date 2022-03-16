@@ -45,13 +45,14 @@ export const accounts = [
   },
 ];
 
-export const incomes = [
+export const transactions = [
   {
     id: 1,
     accountId: 3,
     amount: 300,
     date: '2022-03-01',
     comment: 'Income user 2',
+    type: 'income',
   },
   {
     id: 2,
@@ -59,16 +60,7 @@ export const incomes = [
     amount: 300,
     date: '2022-03-02',
     comment: 'Income user 1',
-  },
-];
-
-export const expenses = [
-  {
-    id: 1,
-    accountId: 1,
-    amount: 200,
-    date: '2022-03-03',
-    comment: 'Expense user 1',
+    type: 'expense',
   },
 ];
 

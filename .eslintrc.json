@@ -32,7 +32,9 @@
             {
                 "js": "always"
             }
-        ]
-        // "no-unused-vars": "off"
+        ],
+        "no-underscore-dangle": "off",
+        "func-names": "off",
+        "no-return-await": "off"
     }
 }

@@ -1,5 +1,4 @@
-// eslint-disable-next-line
-import { users, incomes, accounts, expenses } from '../data/db.js';
+import { users, transactions, accounts } from '../data/db.js';
 
 export function totalUsers(req, res) {
   // get info from database
@@ -16,15 +15,17 @@ export function personalTotalIncome(req, res) {
     .map((account) => account.id);
 
   // calculate total income
-  const sum = incomes
-    .filter((inc) => accountIds.includes(inc.accountId))
-    .reduce((acc, inc) => acc + inc.amount, 0);
+  const sum = transactions
+    .filter((tr) => accountIds.includes(tr.accountId) && tr.type === 'income')
+    .reduce((acc, tr) => acc + tr.amount, 0);
   res.json({ sum });
 }
 
 export function generalTotalIncome(req, res) {
   // calculate general total income
-  const sum = incomes.reduce((acc, inc) => acc + inc.amount, 0);
+  const sum = transactions
+    .filter((tr) => tr.type === 'income')
+    .reduce((acc, inc) => acc + inc.amount, 0);
   res.json({ sum });
 }
 
@@ -43,8 +44,10 @@ export function personalTotalExpense(req, res) {
     .map((account) => account.id);
 
   // calculate total income
-  const sum = expenses
-    .filter((inc) => accountIds.includes(inc.accountId))
+  const sum = transactions
+    .filter(
+      (inc) => accountIds.includes(inc.accountId) && inc.type === 'expense',
+    )
     .reduce((acc, ex) => acc + ex.amount, 0);
   res.json({ sum }); // get info from req.user
   // calculate total expenses
@@ -53,6 +56,8 @@ export function personalTotalExpense(req, res) {
 
 export function generalTotalExpense(req, res) {
   // calculate general total expenses
-  const sum = expenses.reduce((acc, ex) => acc + ex.amount, 0);
+  const sum = transactions
+    .filter((tr) => tr.type === 'expense')
+    .reduce((acc, ex) => acc + ex.amount, 0);
   res.json({ sum });
 }
