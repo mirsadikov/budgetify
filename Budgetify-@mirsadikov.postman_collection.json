@@ -15,7 +15,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"user1_123!\"\r\n}",
+							"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"password\": \"user1_123!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -45,7 +45,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"role\": \"user\",\r\n    \"password\": \"user123!\"\r\n}",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"user123!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -101,7 +101,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg3MTk4LCJleHAiOjE2NDcxOTA3OTh9._hHB6_7dFLVyjEgGyx4BzPMbQUCXB4Z26kRLniPF2_c",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzIxYWVjMzA0Yjk2ZjQ4ZWFkZjM0MSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3NDYxMDY3LCJleHAiOjE2NDc0NjQ2Njd9.otz4p_BVfMVFWzO-WklYtFVO7b9gThw1a0Ctp1bk_jM",
 									"type": "string"
 								}
 							]
@@ -110,7 +110,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Gold\",\r\n    \"currency\": \"RUB\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Gold\",\r\n    \"description\": \"My gold free acount\",\r\n    \"currency\": \"RUB\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -141,12 +141,12 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg3MTk4LCJleHAiOjE2NDcxOTA3OTh9._hHB6_7dFLVyjEgGyx4BzPMbQUCXB4Z26kRLniPF2_c",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzIxYWVjMzA0Yjk2ZjQ4ZWFkZjM0MSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3NDYxMTY5LCJleHAiOjE2NDc0NjQ3Njl9.dV1Xss616KgKWBWVEhA9MbX4bPUw2Sfemm6fKiwoQtk",
 									"type": "string"
 								}
 							]
 						},
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "userid",
@@ -156,7 +156,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Gold+\",\r\n    \"currency\": \"EUR\",\r\n    \"balance\": 500\r\n}",
+							"raw": "{\r\n    \"title\": \"Gold free\",\r\n    \"currency\": \"EUR\",\r\n    \"balance\": 530,\r\n    \"description\": \"Bad balance\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -164,7 +164,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/1",
+							"raw": "http://localhost:{{PORT}}/api/account/6232443248145d2a5736ca3b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -173,7 +173,7 @@
 							"path": [
 								"api",
 								"account",
-								"1"
+								"6232443248145d2a5736ca3b"
 							]
 						}
 					},
@@ -187,7 +187,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzIxYWVjMzA0Yjk2ZjQ4ZWFkZjM0MSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3NDU5OTI4LCJleHAiOjE2NDc0NjM1Mjh9.8p1L0Ra1_TN5M8t8pQxIXYCzCOMAhvj9YX6hEOh9-KA",
 									"type": "string"
 								}
 							]
@@ -217,7 +217,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzIxYWVjMzA0Yjk2ZjQ4ZWFkZjM0MSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3NDU5OTI4LCJleHAiOjE2NDc0NjM1Mjh9.8p1L0Ra1_TN5M8t8pQxIXYCzCOMAhvj9YX6hEOh9-KA",
 									"type": "string"
 								}
 							]
@@ -225,7 +225,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/1",
+							"raw": "http://localhost:{{PORT}}/api/account/6232443248145d2a5736ca3b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -234,7 +234,7 @@
 							"path": [
 								"api",
 								"account",
-								"1"
+								"6232443248145d2a5736ca3b"
 							]
 						}
 					},
@@ -243,10 +243,20 @@
 				{
 					"name": "Delete",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzIxYWVjMzA0Yjk2ZjQ4ZWFkZjM0MSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3NDYxNTg5LCJleHAiOjE2NDc0NjUxODl9.9CvFkhrwVyhyFxYX30Qf0ePxN8bQCR8VXHlL4OphZJY",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/3",
+							"raw": "http://localhost:{{PORT}}/api/account/623244b248145d2a5736ca50",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -255,7 +265,7 @@
 							"path": [
 								"api",
 								"account",
-								"3"
+								"623244b248145d2a5736ca50"
 							]
 						}
 					},
@@ -844,7 +854,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzFjYWE0ZmQ0YzI2MWJhNTEzZjJlYyIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc0MzAzMDksImV4cCI6MTY0NzQzMzkwOX0.f6-f452NW8ScX_kyzSq6qcKbD4sqLidG0IU0OecCqrI",
 									"type": "string"
 								}
 							]
