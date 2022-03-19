@@ -1,56 +1,170 @@
-import { transactions } from '../data/db.js';
+import mongoose from 'mongoose';
+import Account from '../models/Account.js';
+import Transaction from '../models/Transaction.js';
+import Category from '../models/Category.js';
 
-export function createTransaction(req, res) {
-  // get info from req.body
-  const { amount, comment, date, accountId } = req.body;
-  // get info from req.user
-  // create income in database
-  const newIncome = {
-    id: transactions.length + 1,
-    accountId,
-    amount,
-    comment,
-    date,
-  };
+export async function createTransaction(req, res, next) {
+  try {
+    const { type, amount, title, categoryId, comment, date, accountId } =
+      req.body;
+    const { id: userId } = req.user;
+    const account = await Account.findOne({ _id: accountId, userId });
+    const category = await Category.findOne({ _id: categoryId, userId, type });
 
-  transactions.push(newIncome);
-  // update account balance in database
-  res.json(newIncome);
+    if (!category) {
+      res.status(404);
+      throw new Error('Category not found');
+    }
+
+    if (account) {
+      if (type === 'expense') {
+        account.balance -= amount;
+      } else {
+        account.balance += amount;
+      }
+
+      const newTransaction = new Transaction({
+        type,
+        amount,
+        title,
+        categoryId,
+        comment,
+        date,
+        accountId: account._id,
+      });
+
+      await Promise.all([account.save(), newTransaction.save()]);
+
+      res.status(201).json(newTransaction);
+    } else {
+      res.status(404);
+      throw new Error('Account not found!');
+    }
+  } catch (error) {
+    next(error);
+  }
 }
 
-export function updateTransaction(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // get info from req.body
-  const { amount, comment, date } = req.body;
-  // update income in database
-  const incomeIndex = transactions.findIndex((income) => income.id === +id);
-  transactions[incomeIndex].amount = amount;
-  transactions[incomeIndex].comment = comment;
-  transactions[incomeIndex].date = date;
+export async function updateTransaction(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { type, amount, title, categoryId, comment, date, accountId } =
+      req.body;
+    const { id: userId } = req.user;
+    const account = await Account.findOne({ _id: accountId, userId });
+    const category = await Category.findOne({ _id: categoryId, userId });
 
-  res.json(transactions[incomeIndex]);
+    if (!category) {
+      res.status(404);
+      throw new Error('Category not found');
+    }
+
+    if (account) {
+      const udtTr = await Transaction.findByIdAndUpdate(
+        id,
+        {
+          type,
+          amount,
+          title,
+          category,
+          comment,
+          date,
+          accountId: account._id,
+        },
+        { new: true },
+      );
+      res.status(200).json(udtTr);
+    } else {
+      res.status(404);
+      throw new Error('Account not found!');
+    }
+  } catch (error) {
+    next(error);
+  }
 }
 
-export function getTransaction(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // get income from database
-  const income = transactions.find((inc) => inc.id === +id);
-  res.json(income);
+export async function getTransaction(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const { id: userId } = req.user;
+    const transaction = await Transaction.findById(id);
+    const account = await Account.findOne({
+      _id: transaction.accountId,
+      userId,
+    });
+
+    if (account) {
+      res.status(200).json(transaction);
+    } else {
+      res.status(404);
+      throw new Error('Account not found!');
+    }
+  } catch (error) {
+    next(error);
+  }
 }
 
-export function getAllTransactions(req, res) {
-  // get info from req.user
-  // get all transactions from database
-  res.json(transactions);
+export async function getAllTransactions(req, res, next) {
+  try {
+    const { id } = req.user;
+    const accounts = (
+      await Account.where('userId').equals(id).select('_id')
+    ).map((tr) => new mongoose.Types.ObjectId(tr._id));
+    const transactions = await Transaction.where('accountId').in(accounts);
+    // .populate({
+    //   path: 'categoryId',
+    //   select: 'title',
+    // });
+
+    res.json(transactions);
+  } catch (error) {
+    next(error);
+  }
 }
 
-export function deleteTransaction(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // delete income from database
-  const incomeIndex = transactions.findIndex((inc) => inc.id === +id);
-  transactions.splice(incomeIndex, 1);
-  res.json({ message: 'Income deleted' });
+export async function getTransactionsByAccount(req, res, next) {
+  try {
+    const { id: userId } = req.user;
+    const { accountId } = req.params;
+    const account = await Account.findOne({ _id: accountId, userId });
+
+    if (account) {
+      const transactions = await Transaction.find({ accountId });
+      res.status(200).json(transactions);
+    } else {
+      res.status(404);
+      throw new Error('Account not found!');
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function deleteTransaction(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { id: userId } = req.user;
+    const transaction = await Transaction.findById(id);
+
+    if (!transaction) {
+      res.status(404);
+      throw new Error('Transaction not found!');
+    }
+
+    const account = await Account.findOne({
+      _id: transaction.accountId,
+      userId,
+    });
+
+    if (account) {
+      await transaction.remove();
+      res.status(200).json({ success: true });
+    } else {
+      res.status(404);
+      throw new Error('Account not found!');
+    }
+  } catch (error) {
+    next(error);
+  }
 }

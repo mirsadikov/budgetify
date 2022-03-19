@@ -2,7 +2,7 @@ import { ExtractJwt } from 'passport-jwt';
 import User from '../models/User.js';
 
 export const jwtCallback = async (jwtPayLoad, done) => {
-  const user = await User.findById(jwtPayLoad.id);
+  const user = await User.findById(jwtPayLoad.id).select('-password');
   if (user) {
     return done(null, user);
   }

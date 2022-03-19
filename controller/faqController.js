@@ -1,53 +1,73 @@
-import { faqs } from '../data/db.js';
+import FAQ from '../models/FAQ.js';
 
-export function createFaq(req, res) {
-  // get info from req.body
-  const { question, answer } = req.body;
-  // create faq in database
-  const newFaq = {
-    id: faqs.length + 1,
-    question,
-    answer,
-  };
-
-  faqs.push(newFaq);
-
-  res.json(newFaq);
+export async function createFaq(req, res, next) {
+  try {
+    const { question, answer } = req.body;
+    const faq = await FAQ.create({ question, answer });
+    res.json(faq);
+  } catch (error) {
+    next(error);
+  }
 }
 
-export function updateFaq(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // get info from req.body
-  const { question, answer } = req.body;
-  // update faq in database
-  const faqIndex = faqs.findIndex((faq) => faq.id === +id);
-  faqs[faqIndex].question = question;
-  faqs[faqIndex].answer = answer;
+export async function updateFaq(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { question, answer } = req.body;
+    const faq = await FAQ.findOne({ _id: id });
 
-  res.json(faqs[faqIndex]);
+    if (faq) {
+      const udtFaq = await FAQ.findByIdAndUpdate(
+        id,
+        { question, answer },
+        { new: true },
+      );
+      res.status(200).json(udtFaq);
+    } else {
+      res.status(404);
+      throw new Error('FAQ not found!');
+    }
+  } catch (error) {
+    next(error);
+  }
 }
 
-export function getFaq(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // get faq from database
-  const faq = faqs.find((f) => f.id === +id);
-  res.json(faq);
+export async function getFaq(req, res, next) {
+  try {
+    const { id } = req.params;
+    const faq = await FAQ.findOne({ _id: id });
+    if (faq) {
+      res.json(faq);
+    } else {
+      res.status(404);
+      throw new Error('FAQ not found!');
+    }
+  } catch (error) {
+    next(error);
+  }
 }
 
-export function getAllFaqs(req, res) {
-  // get all faqs from database
-
-  res.json(faqs);
+export async function getAllFaqs(req, res, next) {
+  try {
+    const faqs = await FAQ.find({});
+    res.json(faqs);
+  } catch (error) {
+    next(error);
+  }
 }
 
-export function deleteFaq(req, res) {
-  // get id from req.params
-  const { id } = req.params;
-  // delete faq from database
-  const faqIndex = faqs.findIndex((faq) => faq.id === +id);
-  faqs.splice(faqIndex, 1);
-
-  res.json({ message: 'FAQ deleted' });
+export async function deleteFaq(req, res, next) {
+  try {
+    const { id } = req.params;
+    const faq = await FAQ.findOne({ _id: id });
+    if (faq) {
+      await faq.remove();
+      res.status(200).json({ success: true });
+    } else {
+      res.status(404);
+      throw new Error('FAQ not found!');
+    }
+  } catch (error) {
+    next(error);
+  }
 }

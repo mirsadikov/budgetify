@@ -1,63 +1,62 @@
-import { users, transactions, accounts } from '../data/db.js';
+import mongoose from 'mongoose';
+import User from '../models/User.js';
+import Account from '../models/Account.js';
+import Transaction from '../models/Transaction.js';
 
-export function totalUsers(req, res) {
-  // get info from database
-  const total = users.length;
+export async function totalUsers(req, res) {
+  const total = await User.count({});
   res.json({ total });
 }
 
-export function personalTotalIncome(req, res) {
-  // get info from req.user
+export async function personalTotalIncome(req, res) {
   const id = req.user;
-  // get account id
-  const accountIds = accounts
-    .filter((account) => account.userId === +id)
-    .map((account) => account.id);
 
-  // calculate total income
-  const sum = transactions
-    .filter((tr) => accountIds.includes(tr.accountId) && tr.type === 'income')
-    .reduce((acc, tr) => acc + tr.amount, 0);
-  res.json({ sum });
+  const accounts = (await Account.where('userId').equals(id).select('_id')).map(
+    (tr) => new mongoose.Types.ObjectId(tr._id),
+  );
+
+  const incomes = await Transaction.aggregate([
+    {
+      $match: {
+        accountId: { $in: accounts },
+        type: 'income',
+      },
+    },
+    { $group: { _id: '$accountId', amount: { $sum: '$amount' } } },
+  ]);
+
+  res.json(incomes);
 }
 
 export function generalTotalIncome(req, res) {
   // calculate general total income
-  const sum = transactions
-    .filter((tr) => tr.type === 'income')
-    .reduce((acc, inc) => acc + inc.amount, 0);
-  res.json({ sum });
+  res.json({ sum: 0 });
 }
 
 export function expensesByCategories(req, res) {
-  // get info from req.user
   // calculate total expenses
   res.send('expensesByCategories called');
 }
 
-export function personalTotalExpense(req, res) {
-  // get info from req.user
-  const id = req.user;
-  // get account id
-  const accountIds = accounts
-    .filter((account) => account.userId === +id)
-    .map((account) => account.id);
+export async function personalTotalExpense(req, res) {
+  const { id } = req.user;
+  const accounts = (await Account.where('userId').equals(id).select('_id')).map(
+    (tr) => new mongoose.Types.ObjectId(tr._id),
+  );
 
-  // calculate total income
-  const sum = transactions
-    .filter(
-      (inc) => accountIds.includes(inc.accountId) && inc.type === 'expense',
-    )
-    .reduce((acc, ex) => acc + ex.amount, 0);
-  res.json({ sum }); // get info from req.user
-  // calculate total expenses
-  res.send('personalTotalExpense called');
+  const expenses = await Transaction.aggregate([
+    {
+      $match: {
+        accountId: { $in: accounts },
+        type: 'expense',
+      },
+    },
+    { $group: { _id: '$accountId', amount: { $sum: '$amount' } } },
+  ]);
+  res.send(expenses);
 }
 
 export function generalTotalExpense(req, res) {
   // calculate general total expenses
-  const sum = transactions
-    .filter((tr) => tr.type === 'expense')
-    .reduce((acc, ex) => acc + ex.amount, 0);
-  res.json({ sum });
+  res.json({ sum: 0 });
 }

@@ -59,9 +59,7 @@ export async function getAccount(req, res, next) {
 }
 
 export async function getAllAccounts(req, res) {
-  // get info from req.user
   const { id } = req.user;
-  // get all accounts from database
   const userAccounts = await Account.where({ userId: id });
 
   res.json(userAccounts);
