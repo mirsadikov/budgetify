@@ -14,7 +14,7 @@ router.post('/create', auth, admin, createFaq);
 router.get('/', auth, getAllFaqs);
 router
   .route('/:id')
-  .post(auth, admin, updateFaq)
+  .put(auth, admin, updateFaq)
   .get(auth, getFaq)
   .delete(auth, admin, deleteFaq);
 

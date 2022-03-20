@@ -4,10 +4,15 @@ import generateToken from '../utils/generateToken.js';
 export async function registerUser(req, res, next) {
   try {
     const { firstName, lastName, email, password } = req.body;
-    const userExists = await User.findOne({ email });
+
+    if (!firstName || !lastName || !email || !password) {
+      res.status(400);
+      throw new Error('Invalid input!');
+    }
+
+    const userExists = await User.findByEmail(email);
 
     if (userExists) {
-      // if user exists, send error message
       res.status(400);
       throw new Error('User already exists!');
     }
@@ -15,7 +20,7 @@ export async function registerUser(req, res, next) {
     const user = await User.create({
       firstName,
       lastName,
-      email,
+      email: email.toLowerCase(),
       password,
     });
 
@@ -36,12 +41,17 @@ export async function registerUser(req, res, next) {
 
 export async function loginUser(req, res, next) {
   try {
-    // get info from database
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
+
+    if (!email || !password) {
+      res.status(400);
+      throw new Error('Invalid input!');
+    }
+
+    const user = await User.findByEmail(email);
 
     if (user) {
-      if (user.matchPassword(password, user.password)) {
+      if (await user.matchPassword(password)) {
         const payload = { id: user.id, email: user.email, role: user.role };
 
         res.status(200).json({
@@ -57,17 +67,10 @@ export async function loginUser(req, res, next) {
         throw new Error('Incorrect email or password!');
       }
     } else {
-      // if no user, send error message
       res.status(404);
       throw new Error('User not found!');
     }
   } catch (error) {
     next(error);
   }
-}
-
-// if needed
-export function logOutUser(req, res) {
-  // clear cookie token
-  res.send('logOutUser called');
 }

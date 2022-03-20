@@ -9,43 +9,13 @@
 			"name": "Auth",
 			"item": [
 				{
-					"name": "Login",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"user1_123!\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/user/login",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"user",
-								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Register",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"user2@example.com\",\r\n    \"password\": \"user123!\"\r\n}",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"user123!\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -63,6 +33,39 @@
 								"api",
 								"user",
 								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"user123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{PORT}}/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"user",
+								"login"
 							]
 						}
 					},
@@ -110,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Low\",\r\n    \"description\": \"My gold free acount\",\r\n    \"currency\": \"USD\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Gold\",\r\n    \"description\": \"My gold free account\",\r\n    \"currency\": \"USD\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -141,7 +144,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": " eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzQ5NTg2OCwiZXhwIjoxNjQ3NDk5NDY4fQ.QpHkVL3ZSF_SY6Ea5srfGyh9WcVUh3KNACdgAhnjGfo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0Nzc5NTE0NCwiZXhwIjoxNjQ3Nzk4NzQ0fQ.nq7IqmQz6KeLVXAMopA9l2ccBK64y2Nmpo33O8_lktw",
 									"type": "string"
 								}
 							]
@@ -156,7 +159,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Gold free\",\r\n    \"currency\": \"EUR\",\r\n    \"balance\": 5300,\r\n    \"description\": \"Bad balance\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Gold free\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -164,7 +167,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/6232cacf8158f553dca4e759",
+							"raw": "http://localhost:{{PORT}}/api/account/6232cacf8158f553dca4e755",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -173,7 +176,7 @@
 							"path": [
 								"api",
 								"account",
-								"6232cacf8158f553dca4e759"
+								"6232cacf8158f553dca4e755"
 							]
 						}
 					},
@@ -187,7 +190,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxODc4MCwiZXhwIjoxNjQ3NzIyMzgwfQ.Ka_7YWrGszjyOr20BRSx9A060h73CjS-xHgFut2yatI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0Nzc5NTE0NCwiZXhwIjoxNjQ3Nzk4NzQ0fQ.nq7IqmQz6KeLVXAMopA9l2ccBK64y2Nmpo33O8_lktw",
 									"type": "string"
 								}
 							]
@@ -217,7 +220,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxODc4MCwiZXhwIjoxNjQ3NzIyMzgwfQ.Ka_7YWrGszjyOr20BRSx9A060h73CjS-xHgFut2yatI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0Nzc5NTE0NCwiZXhwIjoxNjQ3Nzk4NzQ0fQ.nq7IqmQz6KeLVXAMopA9l2ccBK64y2Nmpo33O8_lktw",
 									"type": "string"
 								}
 							]
@@ -225,7 +228,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/6232cacf8158f553dca4e759",
+							"raw": "http://localhost:{{PORT}}/api/account/6232cacf8158f553dca4e75f",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -234,7 +237,7 @@
 							"path": [
 								"api",
 								"account",
-								"6232cacf8158f553dca4e759"
+								"6232cacf8158f553dca4e75f"
 							]
 						}
 					},
@@ -248,7 +251,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzIxYWVjMzA0Yjk2ZjQ4ZWFkZjM0MSIsImVtYWlsIjoidXNlckBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3NDYxNTg5LCJleHAiOjE2NDc0NjUxODl9.9CvFkhrwVyhyFxYX30Qf0ePxN8bQCR8VXHlL4OphZJY",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0Nzc5NTE0NCwiZXhwIjoxNjQ3Nzk4NzQ0fQ.nq7IqmQz6KeLVXAMopA9l2ccBK64y2Nmpo33O8_lktw",
 									"type": "string"
 								}
 							]
@@ -293,7 +296,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 999,\r\n    \"comment\": \"Good salary\",\r\n    \"accountId\": \"6232cacf8158f553dca4e759\",\r\n    \"type\": \"income\",\r\n    \"title\": \"Salary\",\r\n    \"categoryId\": \"62361ccb77862efb5bf5b2b6\",\r\n    \"date\": \"167719925765\"\r\n}",
+							"raw": "{\r\n    \"amount\": 999,\r\n    \"comment\": \"Good salary\",\r\n    \"accountId\": \"6232cacf8158f553dca4e759\",\r\n    \"type\": \"income\",\r\n    \"title\": \"Salary from work\",\r\n    \"categoryId\": \"62361ccb77862efb5bf5b2b6\",\r\n    \"date\": \"167719925765\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -550,7 +553,7 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "userid",
@@ -739,7 +742,7 @@
 								}
 							]
 						},
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "userid",
@@ -881,7 +884,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzIxYWVjMzA0Yjk2ZjQ4ZWFkZjM0MSIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc0OTA0NjAsImV4cCI6MTY0NzQ5NDA2MH0.42dBuOz0c-iNRItQwWZsccMOab67MMtJAxQqno04geU",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzgwMDA2NiwiZXhwIjoxNjQ3ODAzNjY2fQ.CB6s39hGAhga_hJfvc3pZJAQHVrBPSmZi9bioxwBN1g",
 									"type": "string"
 								}
 							]
@@ -930,7 +933,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcwODk5OSwiZXhwIjoxNjQ3NzEyNTk5fQ.wAABQrVsTB2I7H79uNk5Thidrn7qOVXo5qti_WPX3oI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzgwMDA2NiwiZXhwIjoxNjQ3ODAzNjY2fQ.CB6s39hGAhga_hJfvc3pZJAQHVrBPSmZi9bioxwBN1g",
 									"type": "string"
 								}
 							]
@@ -1012,7 +1015,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcwODk5OSwiZXhwIjoxNjQ3NzEyNTk5fQ.wAABQrVsTB2I7H79uNk5Thidrn7qOVXo5qti_WPX3oI",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzgwMDA2NiwiZXhwIjoxNjQ3ODAzNjY2fQ.CB6s39hGAhga_hJfvc3pZJAQHVrBPSmZi9bioxwBN1g",
 									"type": "string"
 								}
 							]

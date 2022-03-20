@@ -42,9 +42,6 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 };
 
 userSchema.pre('save', function (next) {
-  if (!this.isModified('password')) {
-    next();
-  }
   this.password = bcrypt.hashSync(this.password, 10);
   next();
 });
