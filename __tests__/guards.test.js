@@ -15,14 +15,14 @@ describe('guards', () => {
   });
 
   // AUTH
-  describe('AUTH: GET /api/account', () => {
-    it('should send error: when no token', async () => {
+  describe('authenticate: GET /api/account', () => {
+    it('should send error when no token', async () => {
       const response = await supertest(app).get('/api/account');
 
       expect(response.body.message).toBe('Unauthorized');
     });
 
-    it('should send error: when fake id', async () => {
+    it('should send error when fake id', async () => {
       const token = generateToken({ id: '777777777777777777777777' });
       const response = await supertest(app)
         .get('/api/account')
@@ -32,7 +32,7 @@ describe('guards', () => {
       expect(response.body.message).toBe('Unauthorized');
     });
 
-    it('should send error: id not like id', async () => {
+    it('should send error when id not like id', async () => {
       const token = generateToken({ id: 'something' });
       const response = await supertest(app)
         .get('/api/account')
@@ -43,8 +43,8 @@ describe('guards', () => {
   });
 
   // ADMIN
-  describe('ADMIN: GET /api/reports/totalusers', () => {
-    it('should get total users: when admin', async () => {
+  describe('authorize admin: GET /api/reports/totalusers', () => {
+    it('should get total users when admin', async () => {
       const admin = await User.create({
         firstName: 'admin',
         lastName: 'admin',
@@ -62,7 +62,7 @@ describe('guards', () => {
       expect(response.body.total).toEqual(expect.any(Number));
     });
 
-    it('should send error: when not admin ', async () => {
+    it('should send error when not admin ', async () => {
       const user = await User.create({
         firstName: 'user',
         lastName: 'user',

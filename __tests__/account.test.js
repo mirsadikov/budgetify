@@ -26,68 +26,65 @@ describe('account', () => {
     await mongoose.disconnect();
   });
 
-  describe('POST /api/account/create', () => {
-    describe('POST: when request body is valid', () => {
-      it('should return account', async () => {
-        const response = await supertest(app)
-          .post('/api/account/create')
-          .send({
-            title: 'Test account',
-            description: 'This is a test account',
-            currency: 'USD',
-          })
-          .set('Authorization', user.token);
+  // CREATE ACCOUNT
+  describe('create account: POST /api/account/create', () => {
+    it('should create account when request body is valid', async () => {
+      const response = await supertest(app)
+        .post('/api/account/create')
+        .send({
+          title: 'Test account',
+          description: 'This is a test account',
+          currency: 'USD',
+        })
+        .set('Authorization', user.token);
 
-        expect(response.body.title).toBe('Test account');
-        expect(response.body.balance).toBe(0);
-        expect(response.body.userId).toBe(user.id);
+      expect(response.body.title).toBe('Test account');
+      expect(response.body.balance).toBe(0);
+      expect(response.body.userId).toBe(user.id);
 
-        account = response.body._id;
-      });
+      account = response.body._id;
     });
 
-    describe('POST: when request body is NOT valid', () => {
-      it('should send error: invalid input', async () => {
-        const response = await supertest(app)
-          .post('/api/account/create')
-          .send({
-            title: 'Test account',
-          })
-          .set('Authorization', user.token);
+    it('should send error when request body is NOT valid: invalid input', async () => {
+      const response = await supertest(app)
+        .post('/api/account/create')
+        .send({
+          title: 'Test account',
+        })
+        .set('Authorization', user.token);
 
-        expect(response.status).toBe(400);
-        expect(response.body.message).toBe('Invalid input!');
-      });
+      expect(response.status).toBe(400);
+      expect(response.body.message).toBe('Invalid input!');
     });
   });
 
-  describe('PUT /api/account/:id', () => {
-    describe('PUT: when request body is valid', () => {
-      it('should update and return account', async () => {
-        const response = await supertest(app)
-          .put(`/api/account/${account}`)
-          .send({
-            balance: 777,
-          })
-          .set('Authorization', user.token);
+  // UPDATE ACCOUNT
+  describe('update account: PUT /api/account/:id', () => {
+    it('should update account when request body is valid', async () => {
+      const response = await supertest(app)
+        .put(`/api/account/${account}`)
+        .send({
+          balance: 777,
+        })
+        .set('Authorization', user.token);
 
-        expect(response.body.balance).toBe(777);
-      });
+      expect(response.body.balance).toBe(777);
+    });
 
-      it('should send error: account not found', async () => {
-        const response = await supertest(app)
-          .put(`/api/account/777777777777777777777777`)
-          .send({})
-          .set('Authorization', user.token);
+    it('should send error when account not found', async () => {
+      const response = await supertest(app)
+        .put(`/api/account/777777777777777777777777`)
+        .send({})
+        .set('Authorization', user.token);
 
-        expect(response.status).toBe(404);
-        expect(response.body.message).toBe('Account not found!');
-      });
+      expect(response.status).toBe(404);
+      expect(response.body.message).toBe('Account not found!');
     });
   });
 
-  describe('GET /api/account/:id', () => {
-    it('should update return account', async () => {
+  // GET ONE ACCOUNT
+  describe('get one account: GET /api/account/:id', () => {
+    it('should return one account', async () => {
       const response = await supertest(app)
         .get(`/api/account/${account}`)
         .set('Authorization', user.token);
@@ -95,7 +92,7 @@ describe('account', () => {
       expect(response.body.balance).toBe(777);
     });
 
-    it('should send error: account not found', async () => {
+    it('should send error when account not found', async () => {
       const response = await supertest(app)
         .get(`/api/account/777777777777777777777777`)
         .set('Authorization', user.token);
@@ -105,7 +102,8 @@ describe('account', () => {
     });
   });
 
-  describe('GET /api/account', () => {
+  // GET ALL ACCOUNTS
+  describe('get all accounts: GET /api/account', () => {
     it('should return all accounts', async () => {
       const response = await supertest(app)
         .get('/api/account')
@@ -116,7 +114,8 @@ describe('account', () => {
     });
   });
 
-  describe('DELETE /api/account/:id', () => {
+  // DELETE ACCOUNT
+  describe('delete account: DELETE /api/account/:id', () => {
     it('should delete account', async () => {
       const response = await supertest(app)
         .delete(`/api/account/${account}`)
@@ -130,7 +129,7 @@ describe('account', () => {
       expect(response.body.success).toBe(true);
     });
 
-    it('should send error: account not found', async () => {
+    it('should send error when account not found', async () => {
       const response = await supertest(app)
         .delete(`/api/account/777777777777777777777777`)
         .set('Authorization', user.token);

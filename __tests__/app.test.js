@@ -13,7 +13,7 @@ describe('app', () => {
   });
 
   // TEST
-  describe('TEST: GET /', () => {
+  describe('test server: GET /', () => {
     it('should return Hello World!', async () => {
       const response = await supertest(app).get('/');
 
@@ -22,8 +22,8 @@ describe('app', () => {
   });
 
   // NOT FOUND
-  describe('NOT FOUND: GET /api/some/wrong/url', () => {
-    it('should send error: not found', async () => {
+  describe('request not found route: GET /api/some/wrong/url', () => {
+    it('should send error when url not found', async () => {
       const response = await supertest(app).get('/api/some/wrong/url');
 
       expect(response.status).toBe(404);
