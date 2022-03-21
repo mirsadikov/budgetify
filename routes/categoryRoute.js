@@ -14,7 +14,7 @@ router.post('/create', auth, createCategory);
 router.get('/', auth, getAllCategories);
 router
   .route('/:id')
-  .post(auth, updateCategory)
+  .put(auth, updateCategory)
   .get(auth, getCategory)
   .delete(auth, deleteCategory);
 

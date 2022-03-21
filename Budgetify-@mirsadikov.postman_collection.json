@@ -9,8 +9,41 @@
 			"name": "Auth",
 			"item": [
 				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"John\",\r\n    \"lastName\": \"Doe\",\r\n    \"email\": \"user1@example.com\",\r\n    \"password\": \"user123!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:{{PORT}}/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Login",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -33,36 +66,6 @@
 								"api",
 								"user",
 								"login"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Register",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"user@example.com\",\r\n    \"role\": \"user\",\r\n    \"password\": \"user123!\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/user/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"user",
-								"register"
 							]
 						}
 					},
@@ -94,14 +97,14 @@
 			"name": "Account",
 			"item": [
 				{
-					"name": "Create",
+					"name": "Create Account",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg3MTk4LCJleHAiOjE2NDcxOTA3OTh9._hHB6_7dFLVyjEgGyx4BzPMbQUCXB4Z26kRLniPF2_c",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJjZjg0NWUzNThhN2VhMTc5YjUzNCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcwNzAzNywiZXhwIjoxNjQ3NzEwNjM3fQ.2upL7eejQ9M5VJv75MdFOwEIi8KqHY_iA7Y9k2IOVZg",
 									"type": "string"
 								}
 							]
@@ -110,7 +113,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Gold\",\r\n    \"currency\": \"RUB\"\r\n}",
+							"raw": "{\r\n    \"title\": \"Gold\",\r\n    \"description\": \"My gold free account\",\r\n    \"currency\": \"USD\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -134,19 +137,19 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Update Account",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg3MTk4LCJleHAiOjE2NDcxOTA3OTh9._hHB6_7dFLVyjEgGyx4BzPMbQUCXB4Z26kRLniPF2_c",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0Nzc5NTE0NCwiZXhwIjoxNjQ3Nzk4NzQ0fQ.nq7IqmQz6KeLVXAMopA9l2ccBK64y2Nmpo33O8_lktw",
 									"type": "string"
 								}
 							]
 						},
-						"method": "POST",
+						"method": "PUT",
 						"header": [
 							{
 								"key": "userid",
@@ -156,7 +159,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Gold+\",\r\n    \"currency\": \"EUR\",\r\n    \"balance\": 500\r\n}",
+							"raw": "{\r\n    \"title\": \"Gold free\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -164,7 +167,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/1",
+							"raw": "http://localhost:{{PORT}}/api/account/6232cacf8158f553dca4e755",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -173,21 +176,21 @@
 							"path": [
 								"api",
 								"account",
-								"1"
+								"6232cacf8158f553dca4e755"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get All",
+					"name": "Get All Accounts",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzgyMTA2NWM1ZGMwYTc0MDBmNTJlYiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc4NDU5MzcsImV4cCI6MTY0Nzg0OTUzN30.Q1LSKf3_cIBA9XLFTx0JpH43CJyU1apG3pZ1vFABsok",
 									"type": "string"
 								}
 							]
@@ -210,14 +213,14 @@
 					"response": []
 				},
 				{
-					"name": "Get One",
+					"name": "Get One Account",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0Nzc5NTE0NCwiZXhwIjoxNjQ3Nzk4NzQ0fQ.nq7IqmQz6KeLVXAMopA9l2ccBK64y2Nmpo33O8_lktw",
 									"type": "string"
 								}
 							]
@@ -225,7 +228,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/1",
+							"raw": "http://localhost:{{PORT}}/api/account/6232cacf8158f553dca4e75f",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -234,19 +237,29 @@
 							"path": [
 								"api",
 								"account",
-								"1"
+								"6232cacf8158f553dca4e75f"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Delete Account",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0Nzc5NTE0NCwiZXhwIjoxNjQ3Nzk4NzQ0fQ.nq7IqmQz6KeLVXAMopA9l2ccBK64y2Nmpo33O8_lktw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/account/3",
+							"raw": "http://localhost:{{PORT}}/api/account/623244b248145d2a5736ca50",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -255,7 +268,7 @@
 							"path": [
 								"api",
 								"account",
-								"3"
+								"623244b248145d2a5736ca50"
 							]
 						}
 					},
@@ -264,22 +277,26 @@
 			]
 		},
 		{
-			"name": "Income",
+			"name": "Transaction",
 			"item": [
 				{
-					"name": "Create",
+					"name": "Create Transaction",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxODc4MCwiZXhwIjoxNjQ3NzIyMzgwfQ.Ka_7YWrGszjyOr20BRSx9A060h73CjS-xHgFut2yatI",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "userid",
-								"value": "1",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"amount\": 500,\r\n    \"comment\": \"Salary\",\r\n    \"date\": \"2022-01-01\",\r\n    \"accountId\": \"2\"\r\n}",
+							"raw": "{\r\n    \"amount\": 999,\r\n    \"comment\": \"Good salary\",\r\n    \"accountId\": \"6232cacf8158f553dca4e759\",\r\n    \"type\": \"income\",\r\n    \"categoryId\": \"62361ccb77862efb5bf5b2b6\",\r\n    \"date\": \"167719925765\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -287,7 +304,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/income/create",
+							"raw": "http://localhost:{{PORT}}/api/transaction/create",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -295,7 +312,7 @@
 							"port": "{{PORT}}",
 							"path": [
 								"api",
-								"income",
+								"transaction",
 								"create"
 							]
 						}
@@ -303,9 +320,19 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Update Transaction",
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcwMTA5MCwiZXhwIjoxNjQ3NzA0NjkwfQ.4Dz_OkOQGAS0jlOp3b1I5rGjTWLEEzdZaOOEgU-DkC4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
 						"header": [
 							{
 								"key": "userid",
@@ -315,7 +342,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"id\": 1,\r\n    \"amount\": 700,\r\n    \"date\": \"2022-02-01\",\r\n    \"comment\": \"Income user 2\"\r\n}",
+							"raw": "{\r\n    \"accountId\": \"6232cfa65e358a7ea179b537\",\r\n    \"amount\": 755,\r\n    \"date\": 1647496963486\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -323,7 +350,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/income/1",
+							"raw": "http://localhost:{{PORT}}/api/transaction/6235ddc3dbc0f83ce367b276",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -331,22 +358,22 @@
 							"port": "{{PORT}}",
 							"path": [
 								"api",
-								"income",
-								"1"
+								"transaction",
+								"6235ddc3dbc0f83ce367b276"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get All",
+					"name": "Get All Transactions",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzgyMTA2NWM1ZGMwYTc0MDBmNTJlYiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc4NDU5MzcsImV4cCI6MTY0Nzg0OTUzN30.Q1LSKf3_cIBA9XLFTx0JpH43CJyU1apG3pZ1vFABsok",
 									"type": "string"
 								}
 							]
@@ -354,7 +381,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/income",
+							"raw": "http://localhost:{{PORT}}/api/transaction",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -362,19 +389,29 @@
 							"port": "{{PORT}}",
 							"path": [
 								"api",
-								"income"
+								"transaction"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get One",
+					"name": "Get All Transactions By Account",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzgyMTA2NWM1ZGMwYTc0MDBmNTJlYyIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0Nzg0NTcxMCwiZXhwIjoxNjQ3ODQ5MzEwfQ.EgLcIBI17cKUmr_8EyRegYJt1MTxa3352S01dUo8EXw",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/income/1",
+							"raw": "http://localhost:{{PORT}}/api/transaction/byaccount/623821065c5dc0a7400f52f5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -382,20 +419,62 @@
 							"port": "{{PORT}}",
 							"path": [
 								"api",
-								"income",
-								"1"
+								"transaction",
+								"byaccount",
+								"623821065c5dc0a7400f52f5"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Get One Transaction",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxNTAzMSwiZXhwIjoxNjQ3NzE4NjMxfQ.zfwV5U2ntLN_Fel3cIuyOfgNalfAcugBgWANXiP7c5Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:{{PORT}}/api/transaction/6236231ed30cae6489f65618",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "{{PORT}}",
+							"path": [
+								"api",
+								"transaction",
+								"6236231ed30cae6489f65618"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Transaction",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzVmNWRlNjEzNTliMDIyZjYxYmQwOSIsImVtYWlsIjoidXNlcjJAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcwNDMyNiwiZXhwIjoxNjQ3NzA3OTI2fQ.qpeye8i1UDCdluEhB9MlgND7jgJyU9Totmklx8987kU",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/income/1",
+							"raw": "http://localhost:{{PORT}}/api/transaction/6235f9d0e9bae59216ece7c7",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -403,147 +482,8 @@
 							"port": "{{PORT}}",
 							"path": [
 								"api",
-								"income",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Expense",
-			"item": [
-				{
-					"name": "Create",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "userid",
-								"value": "1",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/expense/create",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"expense",
-								"create"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "userid",
-								"value": "1",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/expense/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"expense",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/expense",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"expense"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get One",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/expense/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"expense",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:{{PORT}}/api/expense/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "{{PORT}}",
-							"path": [
-								"api",
-								"expense",
-								"3"
+								"transaction",
+								"6235f9d0e9bae59216ece7c7"
 							]
 						}
 					},
@@ -555,8 +495,18 @@
 			"name": "Category",
 			"item": [
 				{
-					"name": "Create",
+					"name": "Create Category",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxNDcyMywiZXhwIjoxNjQ3NzE4MzIzfQ.ZgD_PocdbZWjbrmmHEulTRcqxF7Qa-av36qxR93LXVA",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -567,7 +517,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"title\": \"Some cat\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -591,9 +541,19 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Update Category",
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJjZjg0NWUzNThhN2VhMTc5YjUzNCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxMjgzMSwiZXhwIjoxNjQ3NzE2NDMxfQ.0gcVnkS1u6J-6imvrimWXViLjP-M0mqEEmlgfRkw_xA",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
 						"header": [
 							{
 								"key": "userid",
@@ -603,7 +563,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\r\n    \"title\": \"updated title\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -611,7 +571,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/category/1",
+							"raw": "http://localhost:{{PORT}}/api/category/623619e49491abc3964b219c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -620,15 +580,25 @@
 							"path": [
 								"api",
 								"category",
-								"1"
+								"623619e49491abc3964b219c"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get All",
+					"name": "Get All Categories",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzgyMTA2NWM1ZGMwYTc0MDBmNTJlYiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc4NDU5MzcsImV4cCI6MTY0Nzg0OTUzN30.Q1LSKf3_cIBA9XLFTx0JpH43CJyU1apG3pZ1vFABsok",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -647,12 +617,22 @@
 					"response": []
 				},
 				{
-					"name": "Get One",
+					"name": "Get One Category",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxMzE2NSwiZXhwIjoxNjQ3NzE2NzY1fQ.9hwwcyJ0-gjRHqBAxvGlfTLAWUBtXIZWtQV5JK5BwuM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/category/1",
+							"raw": "http://localhost:{{PORT}}/api/category/623619e49491abc3964b219c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -661,19 +641,29 @@
 							"path": [
 								"api",
 								"category",
-								"1"
+								"623619e49491abc3964b219c"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Delete Category",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxMzE2NSwiZXhwIjoxNjQ3NzE2NzY1fQ.9hwwcyJ0-gjRHqBAxvGlfTLAWUBtXIZWtQV5JK5BwuM",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/category/3",
+							"raw": "http://localhost:{{PORT}}/api/category/623619e49491abc3964b219c",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -682,7 +672,7 @@
 							"path": [
 								"api",
 								"category",
-								"3"
+								"623619e49491abc3964b219c"
 							]
 						}
 					},
@@ -694,8 +684,18 @@
 			"name": "Faqs",
 			"item": [
 				{
-					"name": "Create",
+					"name": "Create Faq",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJjZjg0NWUzNThhN2VhMTc5YjUzNCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc3MTM4NDAsImV4cCI6MTY0NzcxNzQ0MH0.jPQPYcJHf6dBbFeePMjR3ufz_mpjPTvyFzC19bJyU7w",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -730,9 +730,19 @@
 					"response": []
 				},
 				{
-					"name": "Update",
+					"name": "Update Faq",
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJjZjg0NWUzNThhN2VhMTc5YjUzNCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc3MTQwNjQsImV4cCI6MTY0NzcxNzY2NH0.JVgQagEaMbwvSG522AXUpcx72UT_0vjPS1xvDtQNgoE",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
 						"header": [
 							{
 								"key": "userid",
@@ -750,7 +760,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/faqs/1",
+							"raw": "http://localhost:{{PORT}}/api/faqs/62361e396a321dab19c3319b",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -759,15 +769,25 @@
 							"path": [
 								"api",
 								"faqs",
-								"1"
+								"62361e396a321dab19c3319b"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Get All",
+					"name": "Get All Faqs",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxNDIzMiwiZXhwIjoxNjQ3NzE3ODMyfQ.Q7ou0rz7lZ6cHyvs9voz0pwdyqYlHRex_mwGcyCRp3k",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
@@ -787,12 +807,22 @@
 					"response": []
 				},
 				{
-					"name": "Get One",
+					"name": "Get One Faq",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJiOTVmMmRjOWE4MmFmMTkxMmQ5ZiIsImVtYWlsIjoidXNlcjFAZXhhbXBsZS5jb20iLCJyb2xlIjoidXNlciIsImlhdCI6MTY0NzcxNDIzMiwiZXhwIjoxNjQ3NzE3ODMyfQ.Q7ou0rz7lZ6cHyvs9voz0pwdyqYlHRex_mwGcyCRp3k",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/faqs/1",
+							"raw": "http://localhost:{{PORT}}/api/faqs/62361e086a321dab19c33193",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -801,19 +831,29 @@
 							"path": [
 								"api",
 								"faqs",
-								"1"
+								"62361e086a321dab19c33193"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Delete",
+					"name": "Delete Faq",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzJjZjg0NWUzNThhN2VhMTc5YjUzNCIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc3MTQzODksImV4cCI6MTY0NzcxNzk4OX0.bx_-dAxR39Mr1ShMyB0PAn7oU_vsZ0tgsCJyUK6ptU0",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:{{PORT}}/api/faqs/1",
+							"raw": "http://localhost:{{PORT}}/api/faqs/62361e086a321dab19c33193",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -822,7 +862,7 @@
 							"path": [
 								"api",
 								"faqs",
-								"1"
+								"62361e086a321dab19c33193"
 							]
 						}
 					},
@@ -844,7 +884,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODYxOTU5ODg4MjkxODQ0NywiZW1haWwiOiJ1c2VyMUBleGFtcGxlLmNvbSIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNjQ3MTg2NTI2LCJleHAiOjE2NDcxOTAxMjZ9.-vCYL0n2z-2TDMIZQw6kfwcM6DT4yjnHv4FL-H8Cjyo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzgyMTA2NWM1ZGMwYTc0MDBmNTJlYiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc4NDU5MzcsImV4cCI6MTY0Nzg0OTUzN30.Q1LSKf3_cIBA9XLFTx0JpH43CJyU1apG3pZ1vFABsok",
 									"type": "string"
 								}
 							]
@@ -888,14 +928,18 @@
 						"disableBodyPruning": true
 					},
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzgyMTA2NWM1ZGMwYTc0MDBmNTJlYiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc4NDU5MzcsImV4cCI6MTY0Nzg0OTUzN30.Q1LSKf3_cIBA9XLFTx0JpH43CJyU1apG3pZ1vFABsok",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "userid",
-								"value": "1",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -966,6 +1010,16 @@
 				{
 					"name": "Total personal expense",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyMzgyMTA2NWM1ZGMwYTc0MDBmNTJlYiIsImVtYWlsIjoiYWRtaW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE2NDc4NDU5MzcsImV4cCI6MTY0Nzg0OTUzN30.Q1LSKf3_cIBA9XLFTx0JpH43CJyU1apG3pZ1vFABsok",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{

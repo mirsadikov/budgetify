@@ -1,90 +1,75 @@
-import { accounts } from '../data/db.js';
+import Account from '../models/Account.js';
+import asyncHandler from '../helpers/asyncErrorHandler.js';
 
-export function createAccount(req, res) {
-  // get info from req.body
-  const { name, currency } = req.body;
-  // get info from req.user
+export const createAccount = asyncHandler(async (req, res) => {
+  const { title, description, currency } = req.body;
+
+  if (!title || !description || !currency) {
+    res.status(400);
+    throw new Error('Invalid input!');
+  }
+
   const { id: userId } = req.user;
-  // create account in database
-  const newAcc = {
-    id: accounts.length + 1,
+  const newAcc = await Account.create({
     userId,
-    name,
+    title,
+    description,
     currency,
-    balance: 0,
-  };
+  });
 
-  accounts.push(newAcc);
+  res.status(201).json(newAcc);
+});
 
-  res.json(newAcc);
-}
-
-export function updateAccount(req, res) {
-  // get id from req.params
+export const updateAccount = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  // get info from req.body
-  const { name, currency, balance } = req.body;
-  // get info from req.user
+  const { title, description, currency, balance } = req.body;
   const { id: userId } = req.user;
-  // update account in database
-  const accIndex = accounts.findIndex(
-    (acc) => acc.id === +id && acc.userId === userId,
-  );
 
-  if (accIndex === -1) {
+  const account = await Account.findOne({ _id: id, userId });
+
+  if (account) {
+    const udtAcc = await Account.findByIdAndUpdate(
+      id,
+      { title, description, currency, balance },
+      { new: true },
+    );
+    res.status(200).json(udtAcc);
+  } else {
     res.status(404);
-    throw new Error('Account not found');
+    throw new Error('Account not found!');
   }
-  accounts[accIndex].name = name;
-  accounts[accIndex].currency = currency;
-  accounts[accIndex].balance = balance;
+});
 
-  res.json(accounts[accIndex]);
-}
-
-export function getAccount(req, res) {
-  // get id from req.params
+export const getAccount = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  // get info from req.user
   const { id: userId } = req.user;
-  // get account from database
-  const account = accounts.find(
-    (acc) => acc.id === +id && acc.userId === userId,
-  );
+  const account = await Account.findOne({ _id: id, userId });
 
-  if (!account) {
+  if (account) {
+    res.status(200).json(account);
+  } else {
     res.status(404);
-    throw new Error('Account not found');
+    throw new Error('Account not found!');
   }
+});
 
-  res.json(account);
-}
-
-export function getAllAccounts(req, res) {
-  // get info from req.user
+export const getAllAccounts = asyncHandler(async (req, res) => {
   const { id } = req.user;
-  // get all accounts from database
-  const userAccounts = accounts.filter((acc) => acc.userId === id);
+  const userAccounts = await Account.where({ userId: id });
 
   res.json(userAccounts);
-}
+});
 
-export function deleteAccount(req, res) {
-  // get id from req.params
+export const deleteAccount = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  // get info from req.user
   const { id: userId } = req.user;
-  // delete account from database
-  const accIndex = accounts.findIndex(
-    (acc) => acc.id === +id && acc.userId === userId,
-  );
+  const account = await Account.findOne({ _id: id, userId });
 
-  if (accIndex === -1) {
+  if (account) {
+    await account.remove();
+    res.status(200).json({ success: true });
+  } else {
     res.status(404);
-    throw new Error('Account not found');
+    throw new Error('Account not found!');
   }
-  accounts.splice(accIndex, 1);
-  // delete all incomes and expenses from database
-
-  res.json({ message: 'Account deleted' });
-}
+});
