@@ -5,8 +5,7 @@ import Category from '../models/Category.js';
 
 export async function createTransaction(req, res, next) {
   try {
-    const { type, amount, title, categoryId, comment, date, accountId } =
-      req.body;
+    const { type, amount, categoryId, comment, date, accountId } = req.body;
     const { id: userId } = req.user;
     const account = await Account.findOne({ _id: accountId, userId });
     const category = await Category.findOne({ _id: categoryId, userId, type });
@@ -26,7 +25,6 @@ export async function createTransaction(req, res, next) {
       const newTransaction = new Transaction({
         type,
         amount,
-        title,
         categoryId,
         comment,
         date,
@@ -48,8 +46,7 @@ export async function createTransaction(req, res, next) {
 export async function updateTransaction(req, res, next) {
   try {
     const { id } = req.params;
-    const { type, amount, title, categoryId, comment, date, accountId } =
-      req.body;
+    const { type, amount, categoryId, comment, date, accountId } = req.body;
     const { id: userId } = req.user;
     const account = await Account.findOne({ _id: accountId, userId });
     const category = await Category.findOne({ _id: categoryId, userId });
@@ -65,7 +62,6 @@ export async function updateTransaction(req, res, next) {
         {
           type,
           amount,
-          title,
           category,
           comment,
           date,
